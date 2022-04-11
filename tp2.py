@@ -161,10 +161,20 @@ def fifo(memoria, paginas):
     fallo = False
 
     for idx, pagina in enumerate(paginas):
-
-        ## Eliminar comentario y codificar
         if len(memoria) > idx:
-            memoria[idx] = pagina
+            flag = False
+            for i in memoria:
+                if memoria[i] == paginas[pagina]:
+                    flag = True
+            if flag == False:
+                for x in memoria:
+                    flag1 = False
+                    if memoria[x] is None and flag1 is not True:
+                        memoria[x] = paginas[pagina]
+                        flag1 = True
+                if flag1 == False:
+                    indice = paginas.index(pagina)
+                    while indice >= 0:
 
         print_estado(memoria, fallo)
 
