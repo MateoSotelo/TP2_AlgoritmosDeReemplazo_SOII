@@ -161,20 +161,29 @@ def fifo(memoria, paginas):
     fallo = False
 
     for idx, pagina in enumerate(paginas):
-        if len(memoria) > idx:
-            flag = False
-            for i in memoria:
-                if memoria[i] == paginas[pagina]:
-                    flag = True
-            if flag == False:
-                for x in memoria:
-                    flag1 = False
-                    if memoria[x] is None and flag1 is not True:
-                        memoria[x] = paginas[pagina]
-                        flag1 = True
-                if flag1 == False:
-                    indice = paginas.index(pagina)
-                    while indice >= 0:
+        i = 0
+        while i != len(memoria):
+            if memoria[i] == paginas[pagina]:
+                origen = 0
+                dest = origen + 1
+                while origen < len(memoria):
+                    if memoria[origen] != None:
+                        memoria[dest] = memoria[origen]
+                    origen = origen + 1
+                    dest = origen + 1
+                break
+        x = len(memoria) - 1
+        while x <= 0:
+            if memoria[x] == None:
+                origen = len(memoria)
+                dest = origen - 1
+                while dest >= 0:
+                    
+
+
+
+
+
 
         print_estado(memoria, fallo)
 
