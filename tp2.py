@@ -157,36 +157,32 @@ def fifo(memoria, paginas):
     [7, 4, 6]
     [7, 1, 6] F
     """
-
     fallo = False
-
+    indice = 0
     for idx, pagina in enumerate(paginas):
-        i = 0
-        while i != len(memoria):
-            if memoria[i] == paginas[pagina]:
-                origen = 0
-                dest = origen + 1
-                while origen < len(memoria):
-                    if memoria[origen] != None:
-                        memoria[dest] = memoria[origen]
-                    origen = origen + 1
-                    dest = origen + 1
-                break
-        x = len(memoria) - 1
-        while x <= 0:
-            if memoria[x] == None:
-                origen = len(memoria)
-                dest = origen - 1
-                while dest >= 0:
-                    
-
-
-
-
-
-
+        x = 0
+        ban = 0
+        for x in range(len(memoria)):
+            if memoria[x] == pagina:
+                ban = 1
+                fallo = False
+        if ban == 0:
+            y = 0
+            ban1 = 0
+            for y in range(len(memoria)):
+                if memoria[y] is None and ban1 == 0:
+                    memoria[y] = pagina
+                    if y == 0:
+                        indice = paginas.index(pagina)
+                    ban1 = 1
+            if ban == 0 and ban1 == 0:
+                memoria[indice] = pagina
+                fallo = True
+                if indice < len(memoria) - 1:
+                    indice = indice + 1
+                else:
+                    indice = 0
         print_estado(memoria, fallo)
-
 
 def lru(memoria, paginas):
     """LRU
