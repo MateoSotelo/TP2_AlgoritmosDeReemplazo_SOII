@@ -242,12 +242,37 @@ def lru(memoria, paginas):
     [4, 6, 7]
     [1, 6, 7] F
     """
-
     fallo = False
 
     for idx, pagina in enumerate(paginas):
+        x = 0
+        ban = 0
+        for x in range(len(memoria)):
+            if memoria[x] == pagina:
+                ban = 1
+                fallo = False
+        if ban == 0:
+            y = 0
+            ban1 = 0
+            for y in range(len(memoria)):
+                if memoria[y] is None and ban1 == 0:
+                    memoria[y] = pagina
+                    ban1 = 1
+        if ban == 0 and ban1 == 0:
+            minIndice = paginas.index(pagina)
+            posPagina = 0
+            for x in range(len(memoria)):
+                indice = paginas.index(pagina)
+                while indice >= 0:
+                    if memoria[x] == paginas[indice] and indice <= minIndice:
+                        minIndice = indice
+                        posPagina = x
+                        break
+                    indice = indice - 1
+            memoria[posPagina] = pagina
+            fallo = True
 
-        ## Eliminar comentario y codificar
+
 
         print_estado(memoria, fallo)
 
