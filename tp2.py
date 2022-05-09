@@ -243,37 +243,37 @@ def lru(memoria, paginas):
     [1, 6, 7] F
     """
     fallo = False
-
+    indice = -1
     for idx, pagina in enumerate(paginas):
-        x = 0
+        indice = indice + 1
+        w = 0
         ban = 0
-        for x in range(len(memoria)):
-            if memoria[x] == pagina:
+        for w in range(len(memoria)):
+            if memoria[w] == pagina:
                 ban = 1
                 fallo = False
         if ban == 0:
-            y = 0
+            x = 0
             ban1 = 0
-            for y in range(len(memoria)):
-                if memoria[y] is None and ban1 == 0:
-                    memoria[y] = pagina
-                    ban1 = 1
-        if ban == 0 and ban1 == 0:
-            minIndice = paginas.index(pagina)
-            posPagina = 0
             for x in range(len(memoria)):
-                indice = paginas.index(pagina)
-                while indice >= 0:
-                    if memoria[x] == paginas[indice] and indice <= minIndice:
-                        minIndice = indice
-                        posPagina = x
-                        break
-                    indice = indice - 1
-            memoria[posPagina] = pagina
-            fallo = True
-
-
-
+                if memoria[x] is None and ban1 == 0:
+                    memoria[x] = pagina
+                    ban1 = 1
+            if ban == 0 and ban1 == 0:
+                menorIndice = 1000000
+                posicionMemoriaMenor = len(memoria) - 1
+                y = 0
+                for y in range(len(memoria)):
+                    z = indice
+                    while z >= 0:
+                        if memoria[y] == paginas[z]:
+                            if z < menorIndice:
+                                posicionMemoriaMenor = y
+                                menorIndice = z
+                            break
+                        z = z - 1
+                memoria[posicionMemoriaMenor] = pagina
+                fallo = True
         print_estado(memoria, fallo)
 
 
@@ -487,6 +487,38 @@ def reloj(memoria, paginas):
     marcas = [0] * len(memoria)  # Indica los bloques de memoria marcados
 
     for idx, pagina in enumerate(paginas):
+        x = 0
+        ban = 0
+        for x in range(len(memoria)):
+            if memoria[x] == pagina:
+                marcas[x] = "*"
+                ban = 1
+                fallo = False
+        if ban == 0:
+            y = 0
+            ban1 = 0
+            for y in range(len(memoria)):
+                if memoria[y] is None and ban1 == 0:
+                    memoria[y] = pagina
+                    ban1 = 1
+                    puntero = puntero + 1
+                    if puntero > len(memoria) - 1:
+                        puntero = 0
+        if ban == 0 and ban1 == 0:
+            ban3 = 0
+            while(ban3 == 0):
+                if marcas[puntero] == "*":
+                    marcas[puntero] = ""
+                    puntero = puntero + 1
+                    if puntero > len(memoria) - 1:
+                        puntero = 0
+                else:
+                    memoria[puntero] = pagina
+                    puntero = puntero + 1
+                    if puntero > len(memoria) - 1:
+                        puntero = 0
+                    ban3 = 1
+                    fallo = True
 
         ## Eliminar comentario y codificar
 
