@@ -93,8 +93,29 @@ def optimo(memoria, paginas):
     fallo = False
 
     for idx, pagina in enumerate(paginas):
+        x = 0
+        ban = 0
+        for x in range(len(memoria)):
+            if memoria[x] == pagina:
+                ban = 1
+                fallo = False
+        if ban == 0:
+            y = 0
+            ban1 = 0
+            for y in range(len(memoria)):
+                if memoria[y] is None and ban1 == 0:
+                    memoria[y] = pagina
+                    ban1 = 1
+            if ban == 0 and ban1 == 0:
+                indiceMemoriaReemplazar = 0
+                for pag in range(len(paginas)):
+                    for mem in range(len(memoria)):
+                        if paginas[pag] == memoria[mem]:
+                            indiceMemoriaReemplazar = memoria.index(mem)
 
-        ## Eliminar comentario y codificar
+                memoria[indiceMemoriaReemplazar] = pagina
+                fallo = True
+
 
         print_estado(memoria, fallo)
 
