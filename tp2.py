@@ -91,7 +91,6 @@ def optimo(memoria, paginas):
     """
 
     fallo = False
-
     for idx, pagina in enumerate(paginas):
         x = 0
         ban = 0
@@ -105,18 +104,50 @@ def optimo(memoria, paginas):
             for y in range(len(memoria)):
                 if memoria[y] is None and ban1 == 0:
                     memoria[y] = pagina
+                    if y == 0:
+                        indice = paginas.index(pagina)
                     ban1 = 1
             if ban == 0 and ban1 == 0:
-                indiceMemoriaReemplazar = 0
-                for pag in range(len(paginas)):
-                    for mem in range(len(memoria)):
-                        if paginas[pag] == memoria[mem]:
-                            indiceMemoriaReemplazar = memoria.index(mem)
-
-                memoria[indiceMemoriaReemplazar] = pagina
-                fallo = True
-
-
+                indiceReemplazar = -10000
+                indiceMayorTiempo = 10000
+                indiceMarcaFifo = 0
+                ban5 = 0
+                for z in range(len(memoria)):
+                    indiceMarca = idx
+                    ban2 = 0
+                    ban3 = 0
+                    ban6 = 0
+                    while (indiceMarca <= len(paginas) - 1 and ban2 == 0):
+                        if memoria[z] == paginas[indiceMarca]:
+                            ban2 = 1
+                            ban3 = 1
+                            if indiceMarca >= indiceReemplazar and ban5 == 0:
+                                indiceReemplazar = z
+                        indiceMarca = indiceMarca + 1
+                    if indiceMarca > len(paginas) - 1 and ban2 == 0 and ban3 == 0 and indiceReemplazar > -10000:
+                        if ban5 == 0:
+                            indiceReemplazar = z
+                            indiceMayorTiempo = paginas.index(pagina)
+                            ban5 = 1
+                        else:
+                            ban4 = 0
+                            while (indiceMarcaFifo != idx and ban4 == 0):
+                                if memoria[z] == paginas[indiceMarcaFifo]:
+                                    ban4 = 1
+                                    if indiceMarcaFifo < indiceMayorTiempo:
+                                        indiceMayorTiempo = indiceMarcaFifo
+                                        indiceReemplazar = z
+                                indiceMarcaFifo = indiceMarcaFifo + 1
+                if indiceReemplazar == -10000:
+                    memoria[indice] = pagina
+                    fallo = True
+                    if indice < len(memoria) - 1:
+                        indice = indice + 1
+                    else:
+                        indice = 0
+                else:
+                    memoria[indiceReemplazar] = pagina
+                    fallo = True
         print_estado(memoria, fallo)
 
 
